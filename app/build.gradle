@@ -7,7 +7,7 @@ android {
     compileSdk 32
 
     defaultConfig {
-        applicationId "in.palashbauri.gemi"
+        applicationId "in.palashbauri.gemilander"
         minSdk 27
         targetSdk 32
         versionCode 1

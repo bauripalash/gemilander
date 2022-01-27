@@ -1,4 +1,4 @@
-package `in`.palashbauri.gemi
+package `in`.palashbauri.gemilander
 
 import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
@@ -8,14 +8,13 @@ import android.widget.ImageButton
 import android.widget.EditText
 import android.webkit.WebViewClient
 import android.webkit.WebView
-import `in`.palashbauri.gemi.GemParser
 import android.widget.Toast
 
 
 class MainActivity : AppCompatActivity() {
     lateinit var home_button : ImageButton
     lateinit var menu_button : ImageButton
-    lateinit var url_box : EditText
+    lateinit var search_box : EditText
     lateinit var output_box : WebView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,7 +23,7 @@ class MainActivity : AppCompatActivity() {
 
         home_button = findViewById(R.id.home_button)
         menu_button = findViewById(R.id.menu_button)
-        url_box = findViewById(R.id.url_box)
+        search_box = findViewById(R.id.search_box)
         output_box = findViewById(R.id.output_box)
         output_box.webViewClient = WebViewClient()
 
@@ -40,6 +39,22 @@ class MainActivity : AppCompatActivity() {
             * list
             * another list
             * another another list
+            => https://google.com first link
+            => https://helloworld.com
+            => https://hello.com palash
+            ```java
+            int hello 
+            papp
+            ```
+            
+            ```
+            hello
+            ```
+            
+        
+        this is a plain text
+            this is also a plaintext
+        
             
         """.trimIndent()
         var x : GemParser = GemParser(inp)

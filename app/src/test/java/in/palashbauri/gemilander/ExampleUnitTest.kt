@@ -1,4 +1,4 @@
-package `in`.palashbauri.gemi
+package `in`.palashbauri.gemilander
 
 import org.junit.Test
 

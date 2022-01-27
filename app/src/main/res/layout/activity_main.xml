@@ -20,7 +20,7 @@
         <WebView
             android:id="@+id/output_box"
             android:layout_width="match_parent"
-            android:layout_height="594dp"
+            android:layout_height="583dp"
             android:background="#FFFFFF" />
     </FrameLayout>
 
@@ -39,11 +39,12 @@
 
         <ImageButton
             android:id="@+id/home_button"
+            android:contentDescription="@string/home_btn_desc"
             android:layout_width="47dp"
             android:layout_height="match_parent"
             android:layout_weight="0"
             android:background="#FFFFFF"
-            app:srcCompat="?android:attr/actionModeFindDrawable"
+            app:srcCompat="@drawable/home_icon"
             tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
         <Space
@@ -52,30 +53,31 @@
             android:layout_weight="0" />
 
         <EditText
-            android:id="@+id/url_box"
-            style="@android:style/Widget.Holo.EditText"
-            android:layout_width="267dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="#FFFFFF"
+            android:id="@+id/search_box"
+            android:layout_width="301dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="0"
+            android:background="@drawable/urlbox_bg"
             android:ems="10"
-            android:hint="Enter Url or Search"
+            android:hint="@string/url_search_input"
             android:inputType="textPersonName"
-            android:singleLine="true"
-            tools:ignore="TouchTargetSizeCheck" />
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp" />
 
         <Space
-            android:layout_width="15dp"
+            android:layout_width="10dp"
             android:layout_height="match_parent"
             android:layout_weight="0" />
 
         <ImageButton
             android:id="@+id/menu_button"
+            android:contentDescription="@string/menu_btn_desc"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="0"
             android:background="#FFFFFF"
-            app:srcCompat="?android:attr/fingerprintAuthDrawable"
+            app:srcCompat="@drawable/menu_icon"
             tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
     </LinearLayout>
