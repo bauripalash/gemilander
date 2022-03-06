@@ -1,82 +1,84 @@
 package `in`.palashbauri.gemilander
 
-open class GemParser (text : String) {
+open class GemParser(text: String) {
 
-    var source : List<String> = text.lines()
-    var current_line : Int = 0
-    var output_list : MutableList<String> = mutableListOf()
+    private var source: List<String> = text.lines()
+    private var outputList: MutableList<String> = mutableListOf()
 
-    fun parser(){
-        var in_preftext : Boolean = false
-        var pref_text_alt : String = ""
-        var pref_text : MutableList<String> = mutableListOf()
-        source.forEach{
-            if (!in_preftext) {
-                var _line: String = it.trim()
-                if (_line.startsWith("# ")) {
-                    var s = _line.removePrefix("# ")
+    private fun parser() {
+        var isInsidePrefText = false
+        var prefTextAlt = ""
+        var prefText: MutableList<String> = mutableListOf()
+        source.forEach {
+            if (!isInsidePrefText) {
+                val currentLine: String = it.trim()
+                if (currentLine.startsWith("# ")) {
+                    val s = currentLine.removePrefix("# ")
+                    outputList.add("<h1>$s</h1>")
+                    //println("<h1>$s</h1>")
+                } else if (currentLine.startsWith("## ")) {
+                    val s = currentLine.removePrefix("## ")
+                    outputList.add("<h2>$s</h2>")
+                    //println("<h2>$s</h2>")
+                } else if (currentLine.startsWith("### ")) {
+                    val s = currentLine.removePrefix("### ")
+                    outputList.add("<h3>$s</h3>")
+                } else if (currentLine.startsWith("* ")) {
+                    val s = currentLine.removePrefix("* ")
+                    outputList.add("<li>$s</li>")
+                } else if (currentLine.startsWith("> ")) {
 
-                    println("<h1>$s</h1>")
-                } else if (_line.startsWith("## ")) {
-                    var s = _line.removePrefix("## ")
-                    println("<h2>$s</h2>")
-                } else if (_line.startsWith("### ")) {
-                    var s = _line.removePrefix("### ")
-                    println("<h3>$s</h3>")
-                } else if (_line.startsWith("* ")) {
-                    var s = _line.removePrefix("* ")
-                    println("<li>$s</li>")
-                } else if (_line.startsWith("> ")){
+                    val s = currentLine.removePrefix("> ")
+                    outputList.add("<blockquote>$s</blockquote>")
 
-                    var s = _line.removePrefix("> ")
-                    println("<blockquote>$s</blockquote>")
-
-                } else if (_line.startsWith("=> ")){
-                    var items = _line.removePrefix("=> ").split(" ")
+                } else if (currentLine.startsWith("=> ")) {
+                    val items = currentLine.removePrefix("=> ").split(" ")
 
                     var link = ""
-                    var text : String? = ""
+                    var text: String? = ""
 
-                    if (items.size > 0){
+                    if (items.isNotEmpty()) {
                         link = items[0]
                     }
-                    if (items.size > 1){
+                    if (items.size > 1) {
 
                         text = items.drop(1).joinToString(" ")
 
                     }
 
-//                    if (!text.isNullOrBlank()) {
-//                        println("has text")
-//                    }
-
-                    println("link=> $link | text => $text")
-                }
-
-                else if (_line.startsWith("```")){
-                    in_preftext = true
-                    var s = _line.removePrefix("```")
-                    if (s.length > 0 && s != "\n"){
-                        pref_text_alt = s
+                    if (text.isNullOrEmpty()) {
+                        outputList.add("<a href=\"$link\">$link</a><br/>")
+                    } else {
+                        outputList.add("<a href=\"$link\">$text</a></br>")
+                    }
+                } else if (currentLine.startsWith("```")) {
+                    isInsidePrefText = true
+                    val s = currentLine.removePrefix("```")
+                    if (s.isNotEmpty() && s != "\n") {
+                        prefTextAlt = s
                     }
 
-                }else{
-                    if (_line == "\n"){
-                        println("<br/>")
-                    }else{
-                        println("$_line")
-                    }
-                }
-            }else{
-                var _temp = it.trimStart()
-                if (_temp.startsWith("```")){
-                    println("PREFTEXT | alt => $pref_text_alt | text => ${pref_text.joinToString(" ")}")
-                    in_preftext = false
-                    pref_text_alt = ""
-                    pref_text = mutableListOf()
                 } else {
-                    pref_text.add(it)
-                    pref_text.add("\n")
+                    if (currentLine == "\n") {
+                        outputList.add("<br/>")
+                    } else {
+                        outputList.add(currentLine)
+                    }
+                }
+            } else {
+                val temp = it.trimStart()
+                if (temp.startsWith("```")) {
+                    if (prefTextAlt.isNullOrEmpty()) {
+                        outputList.add("<pre><code>${prefText.joinToString("")}</code></pre>")
+                    } else {
+                        outputList.add("<pre class=\"$prefTextAlt\"><code>${prefText.joinToString("")}</code></pre>")
+                    }
+                    isInsidePrefText = false
+                    prefTextAlt = ""
+                    prefText = mutableListOf()
+                } else {
+                    prefText.add(it)
+                    prefText.add("\n")
 
                 }
 
@@ -84,6 +86,11 @@ open class GemParser (text : String) {
 
 
         }
+    }
+
+    open fun getOutput(): MutableList<String> {
+        this.parser()
+        return this.outputList
     }
 
 }

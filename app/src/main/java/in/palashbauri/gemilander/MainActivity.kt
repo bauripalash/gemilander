@@ -9,6 +9,7 @@ import android.widget.EditText
 import android.webkit.WebViewClient
 import android.webkit.WebView
 import android.widget.Toast
+import gemilander.R
 
 
 class MainActivity : AppCompatActivity() {
@@ -57,8 +58,9 @@ class MainActivity : AppCompatActivity() {
         
             
         """.trimIndent()
-        var x : GemParser = GemParser(inp)
-        x.parser()
+        val x : GemParser = GemParser(inp)
+        val output = x.getOutput()
+        output_box.loadData(output.joinToString("<br/>") , "text/html" , "utf-8")
         //output_box.loadData("<strong>$n</strong>" , "text/html" , "utf-8")
         //url_box.setText("Hello World")
         //output_box.loadData()
